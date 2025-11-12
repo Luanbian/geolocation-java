@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.mockito.Mockito.when;
 
 @WebMvcTest(LocationController.class)
 class LocationControllerTest {
@@ -62,23 +61,21 @@ class LocationControllerTest {
     void saveLocationValidationError() throws Exception {
         // given
         CreateLocationDto locationDto = new CreateLocationDto(
-                "", // Invalid name
+                "",
+                // Invalid name
                 faker.address().fullAddress(),
                 faker.number().numberBetween(-90, 90) + "." + faker.number().numberBetween(0, 99999),
                 faker.number().numberBetween(-90, 90) + "." + faker.number().numberBetween(0, 99999),
-                "INVALID_TYPE" // Invalid type
+                "INVALID_TYPE"
+                // Invalid type
         );
 
         String locationDtoJson = objectMapper.writeValueAsString(locationDto);
 
         // when & then
-        mockMvc.perform(
-                        post("/api/locations")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(locationDtoJson)
-                ).andExpect(status().isBadRequest())
+        mockMvc.perform(post("/api/locations").contentType(MediaType.APPLICATION_JSON).content(locationDtoJson))
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("validation.error"))
-                .andExpect(jsonPath("$.message").value("Validation failed")
-                );
+                .andExpect(jsonPath("$.message").value("Validation failed"));
     }
 }
