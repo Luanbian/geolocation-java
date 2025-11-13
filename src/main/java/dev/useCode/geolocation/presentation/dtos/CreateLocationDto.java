@@ -1,6 +1,5 @@
 package dev.useCode.geolocation.presentation.dtos;
 
-import dev.useCode.geolocation.presentation.CompanyTypes;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
