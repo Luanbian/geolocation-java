@@ -7,6 +7,8 @@ import dev.useCode.geolocation.presentation.dtos.CreateLocationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LocationService {
     @Autowired
@@ -22,5 +24,9 @@ public class LocationService {
                 .build();
 
         return locationRepository.save(location);
+    }
+
+    public List<Location> listLocations() {
+        return locationRepository.findAll();
     }
 }
